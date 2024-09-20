@@ -95,7 +95,6 @@ namespace Graphs_with_adjacency_list
             }
         }
 
-
         public void RemoveEdge(Node fromNode, Node toNode, bool isDirected = true)
         {
             if (fromNode != null && toNode != null)
