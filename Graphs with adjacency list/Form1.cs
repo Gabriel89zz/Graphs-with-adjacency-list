@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Graphs_with_adjacency_list
 {
     public partial class Form1 : Form
@@ -28,34 +30,38 @@ namespace Graphs_with_adjacency_list
             txtNode.Clear();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAddEdge_Click(object sender, EventArgs e)
         {
-
             string from = txtFrom.Text;
             string to = txtTo.Text;
             bool isDirected = chkDirected.Checked;
-            string weightText = txtWeight.Text; // TextBox adicional para el peso
+            string weightText = txtWeight.Text;
 
             Node fromNode = graph.Nodes.FirstOrDefault(n => n.Name == from);
             Node toNode = graph.Nodes.FirstOrDefault(n => n.Name == to);
 
             if (fromNode != null && toNode != null) // Verificar que ambos nodos existan
             {
-                int weight = 0; // Valor por defecto
-
-                // Verificar si se ha introducido un valor para el peso
-                if (!string.IsNullOrWhiteSpace(weightText))
+                if (string.IsNullOrWhiteSpace(weightText)) // Si no hay valor para el peso
                 {
-                    if (!int.TryParse(weightText, out weight)) // Intentar convertir el texto a un entero
+                    // Agregar la arista sin peso
+                    graph.AddEdge(fromNode, toNode, isDirected: isDirected);
+                    MessageBox.Show($"Arista {from} -> {to} agregada.");
+                }
+                else
+                {
+                    // Si se ha introducido un valor para el peso, intentar convertirlo
+                    int weight;
+                    if (!int.TryParse(weightText, out weight))
                     {
                         MessageBox.Show("Por favor, introduzca un valor numérico válido para el peso.");
                         return;
                     }
-                }
 
-                // Agregar la arista con el peso y la opción de dirigido o no dirigido
-                graph.AddEdge(fromNode, toNode, weight: weight, isDirected: isDirected);
-                MessageBox.Show($"Arista {from} -> {to} con peso {weight} agregada.");
+                    // Agregar la arista con el peso
+                    graph.AddWeightedEdge(fromNode, toNode, weight, isDirected: isDirected);
+                    MessageBox.Show($"Arista {from} -> {to} con peso {weight} agregada.");
+                }
             }
             else
             {
@@ -91,21 +97,21 @@ namespace Graphs_with_adjacency_list
             txtTo.Clear();
         }
 
-        private void btnShowGraph_Click(object sender, EventArgs e)
+        private void btnShowAdjacencyList_Click(object sender, EventArgs e)
         {
             txtGraphRepresentation.Clear();
 
-            if (graph.Weighted) // Si el grafo contiene pesos
+            if (graph.IsWeighted) // Si el grafo contiene pesos
             {
                 // Obtener la lista de adyacencia con pesos
                 var adjacencyListWithWeights = graph.GetAdjacencyListWithWeights();
 
                 if (adjacencyListWithWeights.Count > 0)
                 {
-                    foreach (var node in adjacencyListWithWeights)
+                    for (int i = 0; i < adjacencyListWithWeights.Count; i++)
                     {
-                        string nodeName = node.Key;
-                        string edgesString = string.Join(", ", node.Value.Select(edge => $"({edge.toNode}, {edge.weight})"));
+                        string nodeName = graph.Nodes[i].Name; // Suponiendo que tienes acceso a los nodos por índice
+                        string edgesString = string.Join(", ", adjacencyListWithWeights[i].Select(edge => $"({edge.To}, {edge.Weight})"));
                         txtGraphRepresentation.AppendText($"{nodeName}: {edgesString}\r\n");
                     }
                 }
@@ -116,14 +122,14 @@ namespace Graphs_with_adjacency_list
             }
             else // Si el grafo no tiene pesos
             {
-                var adjacencyList = graph.GetAdjacencyList();
+                var adjacencyList = graph.GetAdjacencyList(); // Asumiendo que esta lista es de tipo List<List<string>>
 
                 if (adjacencyList.Count > 0)
                 {
-                    foreach (var node in adjacencyList)
+                    for (int i = 0; i < adjacencyList.Count; i++)
                     {
-                        string nodeName = node.Key;
-                        string edgesString = string.Join(", ", node.Value);
+                        string nodeName = graph.Nodes[i].Name; // Suponiendo que tienes acceso a los nodos por índice
+                        string edgesString = string.Join(", ", adjacencyList[i]);
                         txtGraphRepresentation.AppendText($"{nodeName}: {edgesString}\r\n");
                     }
                 }

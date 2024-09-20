@@ -36,9 +36,9 @@
             txtFrom = new TextBox();
             label4 = new Label();
             txtTo = new TextBox();
-            button1 = new Button();
+            btnAddEdge = new Button();
             btnRemoveEdge = new Button();
-            btnShowGraph = new Button();
+            btnShowAdjacencyList = new Button();
             txtGraphRepresentation = new TextBox();
             label5 = new Label();
             txtWeight = new TextBox();
@@ -118,15 +118,15 @@
             txtTo.Size = new Size(104, 23);
             txtTo.TabIndex = 6;
             // 
-            // button1
+            // btnAddEdge
             // 
-            button1.Location = new Point(261, 144);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 8;
-            button1.Text = "Add Edge";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnAddEdge.Location = new Point(261, 144);
+            btnAddEdge.Name = "btnAddEdge";
+            btnAddEdge.Size = new Size(75, 23);
+            btnAddEdge.TabIndex = 8;
+            btnAddEdge.Text = "Add Edge";
+            btnAddEdge.UseVisualStyleBackColor = true;
+            btnAddEdge.Click += btnAddEdge_Click;
             // 
             // btnRemoveEdge
             // 
@@ -138,18 +138,19 @@
             btnRemoveEdge.UseVisualStyleBackColor = true;
             btnRemoveEdge.Click += btnRemoveEdge_Click;
             // 
-            // btnShowGraph
+            // btnShowAdjacencyList
             // 
-            btnShowGraph.Location = new Point(261, 245);
-            btnShowGraph.Name = "btnShowGraph";
-            btnShowGraph.Size = new Size(75, 39);
-            btnShowGraph.TabIndex = 11;
-            btnShowGraph.Text = "Show Graph";
-            btnShowGraph.UseVisualStyleBackColor = true;
-            btnShowGraph.Click += btnShowGraph_Click;
+            btnShowAdjacencyList.Location = new Point(261, 245);
+            btnShowAdjacencyList.Name = "btnShowAdjacencyList";
+            btnShowAdjacencyList.Size = new Size(75, 54);
+            btnShowAdjacencyList.TabIndex = 11;
+            btnShowAdjacencyList.Text = "Show Adjacency List";
+            btnShowAdjacencyList.UseVisualStyleBackColor = true;
+            btnShowAdjacencyList.Click += btnShowAdjacencyList_Click;
             // 
             // txtGraphRepresentation
             // 
+            txtGraphRepresentation.Font = new Font("Yu Gothic Medium", 11F);
             txtGraphRepresentation.Location = new Point(389, 200);
             txtGraphRepresentation.Multiline = true;
             txtGraphRepresentation.Name = "txtGraphRepresentation";
@@ -242,9 +243,9 @@
             Controls.Add(label5);
             Controls.Add(txtWeight);
             Controls.Add(txtGraphRepresentation);
-            Controls.Add(btnShowGraph);
+            Controls.Add(btnShowAdjacencyList);
             Controls.Add(btnRemoveEdge);
-            Controls.Add(button1);
+            Controls.Add(btnAddEdge);
             Controls.Add(label4);
             Controls.Add(txtTo);
             Controls.Add(label3);
@@ -269,9 +270,9 @@
         private TextBox txtFrom;
         private Label label4;
         private TextBox txtTo;
-        private Button button1;
+        private Button btnAddEdge;
         private Button btnRemoveEdge;
-        private Button btnShowGraph;
+        private Button btnShowAdjacencyList;
         private TextBox txtGraphRepresentation;
         private Label label5;
         private TextBox txtWeight;
